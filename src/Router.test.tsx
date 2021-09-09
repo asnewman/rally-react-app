@@ -6,6 +6,7 @@ describe("comparePath tests", () => {
     const res = comparePath("/rally/:id", "/rally/123");
 
     if (res instanceof Failure) {
+      // eslint-disable-next-line no-throw-literal
       throw "Failure on valid path";
     }
 
@@ -20,6 +21,7 @@ describe("comparePath tests", () => {
     );
 
     if (res instanceof Failure) {
+      // eslint-disable-next-line no-throw-literal
       throw "Failure on valid path";
     }
 
@@ -34,6 +36,7 @@ describe("comparePath tests", () => {
     const res = comparePath("/swapi/hello", "/rally/123/ash/message/999/day");
 
     if (res instanceof Failure) {
+      // eslint-disable-next-line no-throw-literal
       throw "Failure on valid path";
     }
 
