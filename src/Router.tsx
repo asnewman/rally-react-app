@@ -35,7 +35,11 @@ type RouterProps = {
 }
 
 const Router = ({ routes = routes, path = window.location.path }: RouterProps) => {
-  routes.  
+  let foundRoute = 
+  
+  for (const route of routes) {
+    route.
+  }
 }
 
 
