@@ -5,37 +5,37 @@ import { Failure, Success } from "./Utility";
 
 export type Route = {
   path: string;
-  component: React.ReactElement;
+  component: React.FC<Record<string, string>>;
 };
 
 const routes: Route[] = [
-  { path: "/", component: <div>Rally Home</div> },
-  { path: "/rally/:id", component: <div>Rally id: </div> },
+  { path: "/", component: () => <div>Rally Home</div> },
+  { path: "/rally/:id", component: (props) => <div>Rally id: {props.id} </div> },
 ];
 
 export const Router: React.FC = () => {
   const { pathname } = window.location;
-  let foundRoute: Success<ComparePathResult> | Failure | undefined;
+  let comparePathRes: Success<ComparePathResult> | Failure | undefined;
 
   let routeIdx;
   for (routeIdx = 0; routeIdx < routes.length; routeIdx++) {
-    foundRoute = comparePath(routes[routeIdx].path, pathname);
+    comparePathRes = comparePath(routes[routeIdx].path, pathname);
 
     if (
-      (foundRoute instanceof Success && foundRoute.data.doesMatch) ||
-      foundRoute instanceof Failure
+      (comparePathRes instanceof Success && comparePathRes.data.doesMatch) ||
+      comparePathRes instanceof Failure
     ) {
       break;
     }
   }
 
-  if (foundRoute instanceof Failure) {
-    const { error } = foundRoute;
+  if (comparePathRes instanceof Failure) {
+    const { error } = comparePathRes;
     return <p>{{ error }}</p>;
-  } else if (!foundRoute || !foundRoute.data.doesMatch) {
+  } else if (!comparePathRes || !comparePathRes.data.doesMatch) {
     return <p>404 path not found</p>;
   } else {
-    return routes[routeIdx].component;
+    return routes[routeIdx].component(comparePathRes.data.slugs);
   }
 };
 
@@ -70,7 +70,7 @@ export const comparePath = (
       if (slugs[slugKeyword]) {
         return new Failure(
           new Error(
-            "`Error parsing url, multiple same slug keywords found: ${declaredPathWords}`"
+            `Error parsing url, multiple same slug keywords found: ${declaredPathWords}`
           )
         );
       }
