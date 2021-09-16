@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Failure, Success } from "./Utility";
+import { RallyPage } from "./Pages/RallyPage";
 
 export type Route = {
   path: string;
@@ -10,7 +11,7 @@ export type Route = {
 
 const routes: Route[] = [
   { path: "/", component: () => <div>Rally Home</div> },
-  { path: "/rally/:id", component: (props) => <div>Rally id: {props.id} </div> },
+  { path: "/rally/:id", component: (props) => <RallyPage id={props.id} /> },
 ];
 
 export const Router: React.FC = () => {
