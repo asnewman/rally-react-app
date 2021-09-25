@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Failure, Success } from "./Utility";
-import { RallyPage } from "./Pages/RallyPage";
+import { RallyPage } from "./pages/RallyPage";
 
 export type Route = {
   path: string;
